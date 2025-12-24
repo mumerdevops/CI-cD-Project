@@ -16,7 +16,7 @@ jobs:
       - name: Get target repo
         uses: actions/checkout@v4
         with:
-          repository: CI-cD-Project/test-Repo  # ⚠️ Change this!
+          repository: CI-cD-Project/Test-Repo  # ⚠️ Change this!
           token: ${{ secrets.TARGET_REPO_TOKEN }}
           path: other-repo
 
