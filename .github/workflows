@@ -1,0 +1,35 @@
+name: Copy to Another Repo
+
+on:
+  push:
+    branches: [main]  # Runs when you push to main branch
+
+jobs:
+  copy-files:
+    runs-on: ubuntu-latest
+    steps:
+      # Get your source code
+      - name: Get source code
+        uses: actions/checkout@v4
+
+      # Get the other repository
+      - name: Get target repo
+        uses: actions/checkout@v4
+        with:
+          repository: YOUR-USERNAME/YOUR-TARGET-REPO  # ⚠️ Change this!
+          token: ${{ secrets.TARGET_REPO_TOKEN }}
+          path: other-repo
+
+      # Copy your files
+      - name: Copy files
+        run: cp -r ./* other-repo/
+
+      # Save and push
+      - name: Push changes
+        run: |
+          cd other-repo
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Updated from main repo" || exit 0
+          git push
